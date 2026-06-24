@@ -1,0 +1,49 @@
+# ========================
+# Secrets — NEVER commit
+# ========================
+.env
+
+# ========================
+# Generated results
+# ========================
+results/
+
+# ========================
+# Python artifacts
+# ========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# ========================
+# Virtual environments
+# ========================
+venv/
+.venv/
+env/
+.env/
+
+# ========================
+# IDE / OS files
+# ========================
+.vscode/settings.json
+.idea/
+*.DS_Store
+Thumbs.db
+
+# ========================
+# Jupyter
+# ========================
+.ipynb_checkpoints/
+*.ipynb
+
+# ========================
+# HuggingFace cache (large)
+# ========================
+~/.cache/huggingface/

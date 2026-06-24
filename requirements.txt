@@ -1,0 +1,25 @@
+# LLM APIs
+openai>=1.30.0
+anthropic>=0.28.0
+groq>=0.9.0
+
+# Dataset
+datasets>=2.19.0
+huggingface-hub>=0.23.0
+
+# Evaluation
+sentence-transformers>=3.0.0
+
+# Data handling
+pandas>=2.2.0
+
+# Dashboard
+streamlit>=1.35.0
+plotly>=5.22.0
+
+# Utilities
+python-dotenv>=1.0.0
+tqdm>=4.66.0
+
+# (Optional but recommended) Jupyter for exploration
+ipykernel>=6.29.0
