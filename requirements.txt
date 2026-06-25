@@ -23,3 +23,5 @@ tqdm>=4.66.0
 
 # (Optional but recommended) Jupyter for exploration
 ipykernel>=6.29.0
+
+matplotlib>=3.9.0
