@@ -31,7 +31,6 @@ It loads the [TruthfulQA](https://huggingface.co/datasets/truthfulqa/truthful_qa
 
 ```
 llm-eval-pipeline/
-├── main.py                  # Entry point (calls pipeline)
 ├── config.py                # API keys, model names, pricing config
 ├── dataset_loader.py        # Loads TruthfulQA from HuggingFace
 ├── evaluators/
@@ -60,14 +59,14 @@ TruthfulQA Dataset
        ▼
   50 Questions
        │
-  ┌────┴─────────────────────┐
-  │         For each question │
-  │                           │
-  │  GPT-OSS 20B ──┐          │
-  │  Llama 3.3 70B ─┼──► Evaluate ──► Store
-  │  Qwen 3.6 27B ─┘          │
-  │                           │
-  └───────────────────────────┘
+  ┌────┴───────────────────────┐
+  │      For each question      │
+  │                             │
+  │  GPT-OSS 20B  ──┐           │
+  │  Llama 3.3 70B ──┼──► Evaluate ──► Store
+  │  Qwen 3.6 27B  ──┘           │
+  │                             │
+  └─────────────────────────────┘
        │
        ▼
   results/results.json
@@ -138,39 +137,47 @@ Open [http://localhost:8501](http://localhost:8501) in your browser.
 
 ## 📊 Key Findings
 
-> *(Fill this in with your actual results after running the full pipeline)*
+Evaluated on **50 questions** from the TruthfulQA benchmark across 3 models.
 
-| Metric | Winner | Score |
-|--------|--------|-------|
-| Most Accurate | `Llama 3.3 70B` | `xx%` |
-| Most Faithful | `Your result here` | `xx%` |
-| Least Hallucination | `Your result here` | `xx%` |
-| Fastest Response | `Your result here` | `x.xxs` |
+| Metric | GPT-OSS 20B | Llama 3.3 70B | Qwen 3.6 27B |
+|--------|-------------|----------------|--------------|
+| 🎯 Accuracy | 27.84% | **41.59%** | 6.28% |
+| 📖 Faithfulness | 14.76% | **24.99%** | 10.13% |
+| 🔍 Hallucination | 47.60% | **38.40%** ✅ | 83.20% |
+| ⚡ Avg Latency | **0.67s** ✅ | 1.45s | 1.31s |
+
+**Winner per category:**
+
+| Category | Winner |
+|----------|--------|
+| Most Accurate | 🥇 Llama 3.3 70B |
+| Most Faithful | 🥇 Llama 3.3 70B |
+| Least Hallucination | 🥇 Llama 3.3 70B |
+| Fastest Response | 🥇 GPT-OSS 20B |
 
 **Observations:**
-- 
-- 
-- 
+- **Llama 3.3 70B** is the clear overall winner — highest accuracy (41.59%), highest faithfulness (24.99%), and lowest hallucination rate (38.40%) across all 50 questions
+- **GPT-OSS 20B** is the fastest model at 0.67s average latency, making it the best choice when speed matters more than accuracy
+- **Qwen 3.6 27B** underperformed significantly — only 6.28% accuracy and 83.20% hallucination rate. This is likely because Qwen is a reasoning model that outputs internal `<think>` blocks which interfere with scoring even after stripping
+- All models struggled with TruthfulQA — this dataset is specifically designed to be tricky, targeting common misconceptions that LLMs tend to get wrong
+- Hallucination rates across all models are high (38-83%), highlighting that even modern LLMs fabricate information on factual benchmarks
 
 ---
 
 ## 📸 Dashboard Preview
 
-> *(Add a screenshot of your dashboard here)*
->
-> To add: take a screenshot → save as `screenshot.png` in the repo root → replace this section with:
-> `![Dashboard](screenshot.png)`
+![Dashboard](screenshot.png)
 
 ---
 
 ## 🔧 Extending This Project
 
 Ideas for taking this further:
-- Add OpenAI or Anthropic models by restoring the API wrappers
+- Add OpenAI or Anthropic models by restoring the API wrappers in `models/`
 - Swap in a different benchmark dataset (e.g. MMLU, HellaSwag)
 - Upgrade hallucination scoring to use NLI models instead of LLM-as-judge
 - Add a CI/CD pipeline that re-runs evaluation on a schedule
-- Deploy the dashboard to Streamlit Cloud
+- Deploy the dashboard to Streamlit Cloud for public access
 
 ---
 
